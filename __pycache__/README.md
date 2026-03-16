@@ -13,6 +13,7 @@
    - 拆分模块：`core/password_generator.py`（生成逻辑）、`cli/menu.py`（交互）、`utils/strength_checker.py`（强度检测）、`utils/clipboard.py`（剪贴板操作）、`main.py`（入口）；
    - 异常处理：拦截密码长度小于6/大于32、批量生成数量大于100等非法输入；
    - 注释完整：核心函数添加docstring，说明参数、返回值、功能。
+   
 4. 交互要求：
    - 菜单示例：
      ===== 随机密码生成器 =====
