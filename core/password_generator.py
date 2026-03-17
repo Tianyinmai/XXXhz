@@ -1,111 +1,84 @@
 import random
 import string
-from typing import List
 
 CONFUSING_CHARS = {'0', 'O', '1', 'l', 'I'}
-
-
-def get_characters(use_digits: bool = True, use_lower: bool = True,
-                   use_upper: bool = True, use_special: bool = True,
-                   exclude_confusing: bool = False) -> str:
-    chars = []
-    if use_digits:
-        chars.append(string.digits)
-    if use_lower:
-        chars.append(string.ascii_lowercase)
-    if use_upper:
-        chars.append(string.ascii_uppercase)
-    if use_special:
-        chars.append('!@#$%^&*()_+-=[]{}|;:,.<>?')
-    
-    all_chars = ''.join(chars)
-    
-    if exclude_confusing:
-        all_chars = ''.join(c for c in all_chars if c not in CONFUSING_CHARS)
-    
-    return all_chars
 
 
 def generate_single_password(length: int = 16, use_digits: bool = True,
                              use_lower: bool = True, use_upper: bool = True,
                              use_special: bool = True, exclude_confusing: bool = False) -> str:
-    """
-    生成单个随机密码
+    """生成单个随机密码
 
     Args:
-        length: 密码长度（6-32）
-        use_digits: 是否使用数字
-        use_lower: 是否使用小写字母
-        use_upper: 是否使用大写字母
-        use_special: 是否使用特殊符号
-        exclude_confusing: 是否排除易混淆字符
+        length: 密码长度，默认为16，范围6-32
+        use_digits: 是否使用数字，默认为True
+        use_lower: 是否使用小写字母，默认为True
+        use_upper: 是否使用大写字母，默认为True
+        use_special: 是否使用特殊符号，默认为True
+        exclude_confusing: 是否排除易混淆字符，默认为False
 
     Returns:
-        生成的随机密码
+        生成的随机密码字符串
 
     Raises:
-        ValueError: 密码长度不在有效范围或未选择任何字符类型
+        ValueError: 当密码长度不在6-32范围内时抛出
+        ValueError: 当未选择任何字符类型时抛出
     """
     if length < 6 or length > 32:
         raise ValueError("密码长度必须在6-32之间")
-    
-    chars = get_characters(use_digits, use_lower, use_upper, use_special, exclude_confusing)
-    
-    if not chars:
-        raise ValueError("至少需要选择一种字符类型")
-    
-    password = []
+
+    char_sets = []
     if use_digits:
-        available = [c for c in string.digits if c not in (CONFUSING_CHARS if exclude_confusing else set())]
-        if available:
-            password.append(random.choice(available))
-    
+        char_sets.append(string.digits)
     if use_lower:
-        available = [c for c in string.ascii_lowercase if c not in (CONFUSING_CHARS if exclude_confusing else set())]
-        if available:
-            password.append(random.choice(available))
-    
+        char_sets.append(string.ascii_lowercase)
     if use_upper:
-        available = [c for c in string.ascii_uppercase if c not in (CONFUSING_CHARS if exclude_confusing else set())]
-        if available:
-            password.append(random.choice(available))
-    
+        char_sets.append(string.ascii_uppercase)
     if use_special:
-        available = '!@#$%^&*()_+-=[]{}|;:,.<>?'
-        password.append(random.choice(available))
-    
-    remaining_length = length - len(password)
-    if remaining_length > 0:
-        password.extend(random.choice(chars) for _ in range(remaining_length))
-    
+        char_sets.append('!@#$%^&*()_+-=[]{}|;:,.<>?')
+
+    if not char_sets:
+        raise ValueError("至少需要选择一种字符类型")
+
+    if exclude_confusing:
+        filtered_sets = []
+        for char_set in char_sets:
+            filtered = ''.join(c for c in char_set if c not in CONFUSING_CHARS)
+            if filtered:
+                filtered_sets.append(filtered)
+        char_sets = filtered_sets
+        if not char_sets:
+            raise ValueError("排除易混淆字符后无可用字符")
+
+    all_chars = ''.join(char_sets)
+
+    password = []
+    for char_set in char_sets:
+        if char_set:
+            password.append(random.choice(char_set))
+
+    remaining = length - len(password)
+    if remaining > 0:
+        password.extend(random.choices(all_chars, k=remaining))
+
     random.shuffle(password)
     return ''.join(password)
 
 
-def generate_batch_passwords(count: int = 1, length: int = 16,
-                             use_digits: bool = True, use_lower: bool = True,
-                             use_upper: bool = True, use_special: bool = True,
-                             exclude_confusing: bool = False) -> List[str]:
-    """
-    批量生成随机密码
+def generate_multiple_passwords(count: int = 1, **kwargs) -> list:
+    """批量生成随机密码
 
     Args:
-        count: 生成数量（1-100）
-        length: 密码长度（6-32）
-        use_digits: 是否使用数字
-        use_lower: 是否使用小写字母
-        use_upper: 是否使用大写字母
-        use_special: 是否使用特殊符号
-        exclude_confusing: 是否排除易混淆字符
+        count: 生成数量，默认为1，范围1-100
+        **kwargs: 传递给generate_single_password的参数
 
     Returns:
         生成的密码列表
 
     Raises:
-        ValueError: 生成数量不在有效范围
+        ValueError: 当生成数量不在1-100范围内时抛出
     """
     if count < 1 or count > 100:
-        raise ValueError("批量生成数量必须在1-100之间")
-    
-    return [generate_single_password(length, use_digits, use_lower, use_upper, use_special, exclude_confusing)
-            for _ in range(count)]
+        raise ValueError("生成数量必须在1-100之间")
+
+    return [generate_single_password(**kwargs) for _ in range(count)]

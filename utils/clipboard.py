@@ -1,9 +1,8 @@
 def copy_to_clipboard(text: str) -> bool:
-    """
-    复制文本到剪贴板
+    """复制文本到剪贴板
 
     Args:
-        text: 需要复制的文本
+        text: 要复制的文本
 
     Returns:
         复制成功返回True，失败返回False
@@ -13,9 +12,9 @@ def copy_to_clipboard(text: str) -> bool:
         pyperclip.copy(text)
         return True
     except ImportError:
-        print("⚠️  提示：pyperclip库未安装，无法使用剪贴板功能")
-        print("   安装命令：pip install pyperclip")
+        print("提示：未安装pyperclip库，无法使用剪贴板功能")
+        print("如需安装，请执行：pip install pyperclip")
         return False
     except Exception as e:
-        print(f"⚠️  复制失败：{str(e)}")
+        print(f"剪贴板操作失败：{e}")
         return False
