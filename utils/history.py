@@ -7,13 +7,6 @@ HISTORY_FILE = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__fi
 
 
 def save_passwords_history(passwords: List[str], strengths: List[str]) -> None:
-    """
-    保存密码历史记录到本地文件
-
-    Args:
-        passwords: 生成的密码列表
-        strengths: 对应的密码强度列表
-    """
     history = {
         "生成时间": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         "密码列表": passwords,
@@ -41,12 +34,6 @@ def save_passwords_history(passwords: List[str], strengths: List[str]) -> None:
 
 
 def load_history() -> List[dict]:
-    """
-    加载历史记录
-
-    Returns:
-        历史记录列表
-    """
     if not os.path.exists(HISTORY_FILE):
         return []
     
@@ -66,12 +53,6 @@ def load_history() -> List[dict]:
 
 
 def clear_history() -> bool:
-    """
-    清空历史记录
-
-    Returns:
-        成功返回True，失败返回False
-    """
     try:
         if os.path.exists(HISTORY_FILE):
             os.remove(HISTORY_FILE)

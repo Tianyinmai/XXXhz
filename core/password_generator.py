@@ -8,19 +8,6 @@ CONFUSING_CHARS = {'0', 'O', '1', 'l', 'I'}
 def get_characters(use_digits: bool = True, use_lower: bool = True,
                    use_upper: bool = True, use_special: bool = True,
                    exclude_confusing: bool = False) -> str:
-    """
-    获取可选字符集合
-
-    Args:
-        use_digits: 是否使用数字
-        use_lower: 是否使用小写字母
-        use_upper: 是否使用大写字母
-        use_special: 是否使用特殊符号
-        exclude_confusing: 是否排除易混淆字符
-
-    Returns:
-        可选字符组成的字符串
-    """
     chars = []
     if use_digits:
         chars.append(string.digits)

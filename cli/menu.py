@@ -10,17 +10,14 @@ from utils.history import save_passwords_history
 
 
 def clear_screen():
-    """清屏"""
     os.system('cls' if os.name == 'nt' else 'clear')
 
 
 def pause():
-    """暂停等待用户输入"""
     input("\n按回车键继续...")
 
 
 def get_length_input() -> int:
-    """获取密码长度输入"""
     while True:
         try:
             user_input = input("请设置密码长度（6-32，默认16）：").strip()
@@ -36,7 +33,6 @@ def get_length_input() -> int:
 
 
 def get_char_types() -> tuple:
-    """获取字符类型选择"""
     while True:
         user_input = input("请选择字符类型（可多选，用逗号分隔：1.数字 2.小写字母 3.大写字母 4.特殊符号）：").strip()
         
@@ -60,7 +56,6 @@ def get_char_types() -> tuple:
 
 
 def get_exclude_confusing() -> bool:
-    """获取是否排除易混淆字符"""
     while True:
         user_input = input("是否排除易混淆字符（y/n，默认n）：").strip().lower()
         if not user_input:
@@ -71,7 +66,6 @@ def get_exclude_confusing() -> bool:
 
 
 def get_count_input() -> int:
-    """获取批量生成数量"""
     while True:
         try:
             user_input = input("请输入生成数量（1-100，默认1）：").strip()
@@ -87,7 +81,6 @@ def get_count_input() -> int:
 
 
 def single_password_menu():
-    """生成单个密码菜单"""
     clear_screen()
     print("===== 生成单个密码 =====")
     
@@ -128,7 +121,6 @@ def single_password_menu():
 
 
 def batch_password_menu():
-    """批量生成密码菜单"""
     clear_screen()
     print("===== 批量生成密码 =====")
     
@@ -162,7 +154,6 @@ def batch_password_menu():
 
 
 def show_history_menu():
-    """查看历史记录"""
     clear_screen()
     print("===== 历史生成记录 =====")
     
@@ -182,7 +173,6 @@ def show_history_menu():
 
 
 def clear_history_menu():
-    """清空历史记录"""
     clear_screen()
     print("===== 清空历史记录 =====")
     
@@ -204,7 +194,6 @@ def clear_history_menu():
 
 
 def show_main_menu():
-    """显示主菜单"""
     clear_screen()
     print("===== 随机密码生成器 =====")
     print("1. 生成单个密码")
@@ -216,7 +205,6 @@ def show_main_menu():
 
 
 def get_menu_choice() -> str:
-    """获取菜单选择"""
     while True:
         choice = input("请选择功能（0-4）：").strip()
         if choice in ['0', '1', '2', '3', '4']:
@@ -225,7 +213,6 @@ def get_menu_choice() -> str:
 
 
 def main():
-    """主函数"""
     while True:
         show_main_menu()
         choice = get_menu_choice()
