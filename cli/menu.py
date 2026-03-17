@@ -161,27 +161,6 @@ def batch_password_menu():
     pause()
 
 
-def show_main_menu():
-    """显示主菜单"""
-    clear_screen()
-    print("===== 随机密码生成器 =====")
-    print("1. 生成单个密码")
-    print("2. 批量生成密码")
-    print("3. 查看历史生成记录")
-    print("4. 清空历史记录")
-    print("0. 退出程序")
-    print()
-
-
-def get_menu_choice() -> str:
-    """获取菜单选择"""
-    while True:
-        choice = input("请选择功能（0-4）：").strip()
-        if choice in ['0', '1', '2', '3', '4']:
-            return choice
-        print("❌ 错误：请输入0-4之间的数字")
-
-
 def show_history_menu():
     """查看历史记录"""
     clear_screen()
@@ -222,6 +201,27 @@ def clear_history_menu():
         print("❌ 错误：请输入y或n")
     
     pause()
+
+
+def show_main_menu():
+    """显示主菜单"""
+    clear_screen()
+    print("===== 随机密码生成器 =====")
+    print("1. 生成单个密码")
+    print("2. 批量生成密码")
+    print("3. 查看历史生成记录")
+    print("4. 清空历史记录")
+    print("0. 退出程序")
+    print()
+
+
+def get_menu_choice() -> str:
+    """获取菜单选择"""
+    while True:
+        choice = input("请选择功能（0-4）：").strip()
+        if choice in ['0', '1', '2', '3', '4']:
+            return choice
+        print("❌ 错误：请输入0-4之间的数字")
 
 
 def main():
